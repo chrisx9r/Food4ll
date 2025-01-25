@@ -1,9 +1,7 @@
-// LoginForm.jsx
 import React, { useState } from "react";
-
 import "./Signup.css";
 
-function Signup() {
+function Signup({ setCurrentPage }) {
   const [formData, setFormData] = useState({
     organizationName: "",
     email: "",
@@ -142,13 +140,24 @@ function Signup() {
   {errors.role && <div className="error">{errors.role}</div>}
 </div>
 
-          <button type="submit" className="submit-button">
+<button type="submit" className="submit-button">
             Sign Up
           </button>
         </form>
         <p className="login-link">
           Already have an account?{" "}
-          <Link to="/Login">Login here</Link>
+          <button 
+            onClick={() => setCurrentPage("login")}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              color: '#4f46e5',
+              cursor: 'pointer',
+              textDecoration: 'underline'
+            }}
+          >
+            Login here
+          </button>
         </p>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Login() {
+function Login({ setCurrentPage }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
@@ -46,6 +46,21 @@ function Login() {
             Login
           </button>
         </form>
+        <p className="login-link">
+          Don't have an account?{" "}
+          <button 
+            onClick={() => setCurrentPage("signup")}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              color: '#4f46e5',
+              cursor: 'pointer',
+              textDecoration: 'underline'
+            }}
+          >
+            Sign up here
+          </button>
+        </p>
       </div>
     </div>
   );
