@@ -47,7 +47,7 @@ class SignUpForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired()])
+    email = StringField('Emal', validators=[InputRequired()])
     password = PasswordField('Password', validators=[InputRequired()])
     submit = SubmitField('Login')
 
@@ -91,13 +91,13 @@ def signup():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user)
             flash('Login successful!', 'success')
             return redirect(url_for('profile'))
         else:
-            flash('Login failed. Check your username and/or password.', 'danger')
+            flash('Login failed. Check your email and/or password.', 'danger')
     return render_template('login.html', form=form)
 
 
