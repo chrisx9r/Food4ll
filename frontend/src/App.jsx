@@ -1,47 +1,42 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from './Login.jsx';
-import Signup from './Signup.jsx';
-
-// Optional: Create a layout component if you want consistent layout across pages
-const RootLayout = ({ children }) => {
-  return (
-    <div className="app-container">
-      {children}
-    </div>
-  );
-};
-
-// Optional: Create a NotFound component for 404 errors
-const NotFound = () => {
-  return (
-    <div className="login-container">
-      <div className="login-box">
-        <h1>404 - Page Not Found</h1>
-        <p>The page you're looking for doesn't exist.</p>
-      </div>
-    </div>
-  );
-};
+import React, { useState } from "react";
+import Login from "./Login";
+import Signup from "./Signup";
 
 function App() {
+  const [currentPage, setCurrentPage] = useState("signup"); // Default route
+
+  // A simple function to render the appropriate page based on state
+  const renderPage = () => {
+    switch (currentPage) {
+      case "signup":
+        return <Signup />;
+      case "login":
+        return <Login />;
+      default:
+        return (
+          <div>
+            <h1>404 - Page Not Found</h1>
+            <button onClick={() => setCurrentPage("signup")}>
+              Go to Signup
+            </button>
+          </div>
+        );
+    }
+  };
+
   return (
-    <RootLayout>
-      <Routes>
-        {/* Redirect root to signup page */}
-        <Route path="/" element={<Navigate to="/signup" replace />} />
-        
-        {/* Auth routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        
-        {/* 404 route */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </RootLayout>
+    <div>
+      <nav>
+        <button onClick={() => setCurrentPage("signup")}>Signup</button>
+        <button onClick={() => setCurrentPage("login")}>Login</button>
+      </nav>
+      {renderPage()}
+    </div>
   );
 }
 
 export default App;
+
 
 
 
