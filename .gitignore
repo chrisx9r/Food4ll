@@ -1,3 +1,11 @@
 # Node modules
 node_modules/
 venv/
+.env
+.env.* # Matches environment-specific files like .env.production or .env.development
+dist/
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
