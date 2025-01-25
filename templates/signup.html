@@ -3,35 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Food4ll</title>
+    <title>Sign Up - Food4All</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Sign Up</h1>
-        <form method="POST">
+        <h1>Create an Account</h1>
+        <form method="POST" action="{{ url_for('signup') }}">
             {{ form.hidden_tag() }}
             <div class="form-group">
-                {{ form.username.label }}<br>
-                {{ form.username(class="form-control") }}
+                <label for="organization_name">Organization Name</label>
+                {{ form.username(class="form-control", id="organization_name", placeholder="Enter Organization Name") }}
+                {% if form.username.errors %}
+                    <div class="error-message">{{ form.username.errors[0] }}</div>
+                {% endif %}
             </div>
+
             <div class="form-group">
-                {{ form.password.label }}<br>
-                {{ form.password(class="form-control") }}
+                <label for="email">Email</label>
+                {{ form.email(class="form-control", id="email", placeholder="Enter your email") }}
+                {% if form.email.errors %}
+                    <div class="error-message">{{ form.email.errors[0] }}</div>
+                {% endif %}
             </div>
+
             <div class="form-group">
-                {{ form.confirm_password.label }}<br>
-                {{ form.confirm_password(class="form-control") }}
+                <label for="password">Password</label>
+                {{ form.password(class="form-control", id="password", placeholder="Enter your password") }}
+                {% if form.password.errors %}
+                    <div class="error-message">{{ form.password.errors[0] }}</div>
+                {% endif %}
             </div>
+
             <div class="form-group">
-                {{ form.role.label }}<br>
-                {{ form.role(class="form-control") }}
+                <label for="confirm_password">Confirm Password</label>
+                {{ form.confirm_password(class="form-control", id="confirm_password", placeholder="Confirm your password") }}
+                {% if form.confirm_password.errors %}
+                    <div class="error-message">{{ form.confirm_password.errors[0] }}</div>
+                {% endif %}
             </div>
+
             <div class="form-group">
-                {{ form.submit(class="btn btn-primary") }}
+                <label for="phone_number">Phone Number</label>
+                {{ form.phone_number(class="form-control", id="phone_number", placeholder="Enter phone number") }}
+                {% if form.phone_number.errors %}
+                    <div class="error-message">{{ form.phone_number.errors[0] }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country</label>
+                {{ form.country(class="form-control", id="country", placeholder="Enter country") }}
+                {% if form.country.errors %}
+                    <div class="error-message">{{ form.country.errors[0] }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="postal_code">Postal Code</label>
+                {{ form.postal_code(class="form-control", id="postal_code", placeholder="Enter postal code") }}
+                {% if form.postal_code.errors %}
+                    <div class="error-message">{{ form.postal_code.errors[0] }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role</label>
+                {{ form.role(class="form-control", id="role") }}
+                {% if form.role.errors %}
+                    <div class="error-message">{{ form.role.errors[0] }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn">Sign Up</button>
             </div>
         </form>
-        <p>Already have an account? <a href="{{ url_for('login') }}">Log in here</a></p>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
     </div>
 </body>
 </html>
