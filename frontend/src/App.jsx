@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from './Login';
-import Signup from './Signup';
+import Login from './Login.jsx';
+import Signup from './Signup.jsx';
 
 // Optional: Create a layout component if you want consistent layout across pages
 const RootLayout = ({ children }) => {
