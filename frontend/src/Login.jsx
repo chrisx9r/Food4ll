@@ -1,22 +1,38 @@
+// src/Login.jsx
 import React, { useState } from "react";
+import { useAuth } from "./contexts/AuthContext";
 
 function Login({ setCurrentPage }) {
+  const { login } = useAuth();
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login form submitted", formData);
+    setError("");
+    
+    try {
+      const success = await login(formData.email, formData.password);
+      if (success) {
+        setCurrentPage("dashboard");
+      } else {
+        setError("Invalid credentials");
+      }
+    } catch (err) {
+      setError("Failed to log in");
+    }
   };
 
   return (
     <div className="login-container">
       <div className="login-box">
         <h1>Login</h1>
+        {error && <div className="error">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email</label>

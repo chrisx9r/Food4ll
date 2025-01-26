@@ -1,6 +1,9 @@
+// src/App.jsx
 import React, { useState } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
+import { AuthProvider } from "./contexts/AuthContext";
+import Dashboard from "./Dashboard"; // You'll need to create this
 
 function App() {
   const [currentPage, setCurrentPage] = useState("signup");
@@ -11,6 +14,8 @@ function App() {
         return <Signup setCurrentPage={setCurrentPage} />;
       case "login":
         return <Login setCurrentPage={setCurrentPage} />;
+      case "dashboard":
+        return <Dashboard setCurrentPage={setCurrentPage} />;
       default:
         return (
           <div>
@@ -23,10 +28,13 @@ function App() {
     }
   };
 
-  return <div>{renderPage()}</div>;
+  return (
+    <AuthProvider>
+      <div>{renderPage()}</div>
+    </AuthProvider>
+  );
 }
 
 export default App;
-
 
 
