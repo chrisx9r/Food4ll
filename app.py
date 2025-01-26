@@ -10,7 +10,7 @@ from wtforms.validators import InputRequired, Length, EqualTo, NumberRange
 import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:00000000@localhost/Food4LL'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:13971397@localhost/Food4LL'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
