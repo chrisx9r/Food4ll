@@ -1,80 +1,76 @@
-// src/Login.jsx
-import React, { useState } from "react";
-import { useAuth } from "./contexts/AuthContext";
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthContext';
 
-function Login({ setCurrentPage }) {
-  const { login } = useAuth();
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
+function Login() {
+  const navigate = useNavigate();
+  const { login, fetchWithAuth } = useContext(AuthContext);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setError("");
-    
+    setErrorMsg('');
+
     try {
-      const success = await login(formData.email, formData.password);
-      if (success) {
-        setCurrentPage("dashboard");
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        // data.access_token = JWT
+        login(data.access_token);
+        if (data.user.user_type === 'buyer') {
+          navigate('/buyer-dashboard');
+        } else {
+          navigate('/seller-dashboard');
+        }
       } else {
-        setError("Invalid credentials");
+        setErrorMsg(data.message || 'Login failed');
       }
-    } catch (err) {
-      setError("Failed to log in");
+    } catch (error) {
+      console.error(error);
+      setErrorMsg('Login error');
     }
-  };
+  }
 
   return (
     <div className="login-container">
       <div className="login-box">
         <h1>Login</h1>
-        {error && <div className="error">{error}</div>}
+        {errorMsg && <p className="error-text">{errorMsg}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
+            <label>Email</label>
+            <input 
               type="email"
-              id="email"
-              name="email"
-              placeholder="Enter your email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required 
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
+            <label>Password</label>
+            <input 
               type="password"
-              id="password"
-              name="password"
-              placeholder="Enter your password"
-              value={formData.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required 
             />
           </div>
 
-          <button type="submit" className="submit-button">
-            Login
-          </button>
+          <button type="submit" className="submit-button">Login</button>
         </form>
-        <p className="login-link">
-          Don't have an account?{" "}
-          <button 
-            onClick={() => setCurrentPage("signup")}
-            style={{ 
-              background: 'none', 
-              border: 'none', 
-              color: '#4f46e5',
-              cursor: 'pointer',
-              textDecoration: 'underline'
-            }}
-          >
-            Sign up here
+        <p>
+          Don't have an account?{' '}
+          <button className="link-button" onClick={() => navigate('/signup')}>
+            Sign Up
           </button>
         </p>
       </div>
