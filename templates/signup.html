@@ -1,37 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Food4ll</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Sign Up</h1>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            <div class="form-group">
-                {{ form.username.label }}<br>
-                {{ form.username(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ form.password.label }}<br>
-                {{ form.password(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ form.confirm_password.label }}<br>
-                {{ form.confirm_password(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ form.role.label }}<br>
-                {{ form.role(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-primary") }}
-            </div>
-        </form>
-        <p>Already have an account? <a href="{{ url_for('login') }}">Log in here</a></p>
-    </div>
+<div class="login-container">
+  <div class="login-box">
+    <h1>Create an Account</h1>
+    <form method="POST" action="{{ url_for('signup') }}">
+        {{ form.hidden_tag() }}
+
+        <!-- Organization Name Field -->
+        <div class="form-group">
+            <label for="organization_name">Organization Name</label>
+            {{ form.organization_name(class_='form-control') }}
+            {% if form.organization_name.errors %}
+                <ul class="errors">
+                    {% for error in form.organization_name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+            <label for="email">Email</label>
+            {{ form.email(class_='form-control') }}
+            {% if form.email.errors %}
+                <ul class="errors">
+                    {% for error in form.email.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+            <label for="password">Password</label>
+            {{ form.password(class_='form-control') }}
+            {% if form.password.errors %}
+                <ul class="errors">
+                    {% for error in form.password.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            {{ form.confirm_password(class_='form-control') }}
+            {% if form.confirm_password.errors %}
+                <ul class="errors">
+                    {% for error in form.confirm_password.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- User Type Field (buyer/seller) -->
+        <div class="form-group">
+            <label for="user_type">User Type (Buyer or Seller)</label>
+            {{ form.user_type(class_='form-control') }}
+            {% if form.user_type.errors %}
+                <ul class="errors">
+                    {% for error in form.user_type.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- Phone Number Field -->
+        <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            {{ form.phone_number(class_='form-control') }}
+        </div>
+
+        <!-- Country Field -->
+        <div class="form-group">
+            <label for="country">Country</label>
+            {{ form.country(class_='form-control') }}
+        </div>
+
+        <!-- Postal Code Field -->
+        <div class="form-group">
+            <label for="postal_code">Postal Code</label>
+            {{ form.postal_code(class_='form-control') }}
+        </div>
+
+        <button type="submit" class="submit-button">Sign Up</button>
+    </form>
+
+    <p class="login-link">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Login here</a>
+    </p>
+  </div>
+</div>
 </body>
 </html>
